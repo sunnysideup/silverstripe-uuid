@@ -27,8 +27,15 @@ class UUIDExtension extends DataExtension
             $hash = $this->getHashID();
             if ($hash) {
                 $owner->UUID = $this->getHashID();
-                $owner->PublicUUID = $this->calculatePublicUUID();
             }
+        }
+    }
+
+    public function onAfterWrite()
+    {
+        $owner = $this->getOwner();
+        if (!$owner->PublicUUID) {
+            $owner->PublicUUID = $this->calculatePublicUUID();
         }
     }
 
@@ -86,7 +93,7 @@ class UUIDExtension extends DataExtension
     {
         $owner = $this->getOwner();
         if ($owner->ID) {
-            return static::create_hash_id($owner->ClassName, $owner->ID) . HashCreator::generate_hash(32);
+            return static::create_hash_id($owner->ClassName, $owner->ID) . '_' . HashCreator::generate_hash(32);
         }
 
         return '';
