@@ -1,0 +1,43 @@
+{
+  "name": "sunnysideup/uuid",
+  "type": "silverstripe-vendormodule",
+  "description": "Add a UUID (Unique code / hash) to any dataobject",
+  "keywords": [
+    "Silverstripe-CMS",
+    "CMS",
+    "Silverstripe",
+    "UUID",
+    "Hash",
+    "Unique",
+    "Code"
+  ],
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Nicolaas Francken",
+      "email": "modules@sunnysideup.co.nz",
+      "role": "lead developer"
+    }
+  ],
+  "require": {
+    "silverstripe/framework": "^4.0"
+  },
+  "extra": {
+    "expose": [
+      "client"
+    ]
+  },
+  "autoload": {
+    "psr-4": {
+      "Sunnysideup\\UUID\\": "src/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true,
+      "silverstripe/vendor-plugin": true,
+      "silverstripe/recipe-plugin": true
+    },
+    "process-timeout": 600
+  }
+}
