@@ -48,13 +48,13 @@ class UUIDExtension extends DataExtension
         }
         $from = strpos($owner->UUID, '_') - 5;
 
-        return str_replace('_', '', substr($owner->UUID, $from, 11));
+        return str_replace('_', '', substr($owner->UUID, $from, 12));
     }
 
     public function updateCMSFields(FieldList $fields)
     {
         $owner = $this->owner;
-        if (!($owner instanceof SiteTree)) {
+        if (!($owner->hasMethod('updateSettingsFields'))) {
             $this->updateCMSFieldsForHashId($fields);
         }
     }
@@ -62,7 +62,7 @@ class UUIDExtension extends DataExtension
     public function updateSettingsFields(FieldList $fields)
     {
         $owner = $this->owner;
-        if ($owner instanceof SiteTree) {
+        if ($owner->hasMethod('updateSettingsFields')) {
             $this->updateCMSFieldsForHashId($fields);
         }
     }
