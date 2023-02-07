@@ -61,7 +61,7 @@ class UUIDExtension extends DataExtension
     public function updateCMSFields(FieldList $fields)
     {
         $owner = $this->owner;
-        if (!($owner->hasMethod('updateSettingsFields'))) {
+        if (!($owner instanceof SiteTree)) {
             $this->updateCMSFieldsForHashId($fields);
         }
     }
@@ -69,7 +69,7 @@ class UUIDExtension extends DataExtension
     public function updateSettingsFields(FieldList $fields)
     {
         $owner = $this->owner;
-        if ($owner->hasMethod('updateSettingsFields')) {
+        if ($owner instanceof SiteTree) {
             $this->updateCMSFieldsForHashId($fields);
         }
     }
@@ -77,8 +77,25 @@ class UUIDExtension extends DataExtension
     public function updateCMSFieldsForHashId(FieldList $fields)
     {
         $owner = $this->owner;
+        $fields->removeByName(
+            [
+                'UUID',
+                'PublicUUID',
+                'xxx',
+            ]
+        );
+        if ($owner->hasMethod('ShowUUIDInCMS')) {
+            if (!$owner->ShowUUIDInCMS()) {
+                return;
+            }
+        }
+        $tab = 'Root.Main';
+        if ($owner->hasMethod('UUIDTabInCMS')) {
+            $tab = $owner->UUIDTabInCMS();
+        }
+
         $fields->addFieldsToTab(
-            'Root.Security',
+            $tab,
             [
                 ReadonlyField::create('MyUUID', 'Private UUID', $owner->UUID),
                 ReadonlyField::create('MyPublicUUID', 'Public UUID', $owner->PublicUUID),
