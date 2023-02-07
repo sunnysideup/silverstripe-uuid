@@ -81,7 +81,6 @@ class UUIDExtension extends DataExtension
             [
                 'UUID',
                 'PublicUUID',
-                'xxx',
             ]
         );
         if ($owner->hasMethod('ShowUUIDInCMS')) {
