@@ -24,16 +24,8 @@ class UUIDExtension extends DataExtension
     {
         $owner = $this->getOwner();
         if (!$owner->UUID) {
-            $hash = $this->getHashID();
-            if ($hash) {
-                $owner->UUID = $this->getHashID();
-            }
+            $owner->UUID = $this->getHashID();
         }
-    }
-
-    public function onAfterWrite()
-    {
-        $owner = $this->getOwner();
         if (!$owner->PublicUUID) {
             $owner->PublicUUID = $this->calculatePublicUUID();
         }
@@ -48,14 +40,11 @@ class UUIDExtension extends DataExtension
     {
         $owner = $this->getOwner();
         if (!$owner->UUID) {
-            $this->onBeforeWrite();
+            return 'ERROR';
         }
-        if (!$owner->UUID) {
-            return '';
-        }
-        $from = strpos($owner->UUID, '_') - 5;
+        $from = strpos($owner->UUID, '_') - 6;
 
-        return str_replace('_', '', substr($owner->UUID, $from, 12));
+        return str_replace('_', '', substr($owner->UUID, $from, 13));
     }
 
     public function updateCMSFields(FieldList $fields)
