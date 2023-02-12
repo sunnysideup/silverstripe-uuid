@@ -10,12 +10,6 @@ class HashCreator
      * Generate a random string, using a cryptographically secure
      * pseudorandom number generator (random_int).
      *
-     * This function uses type hints now (PHP 7+ only), but it was originally
-     * written for PHP 5 as well.
-     *
-     * For PHP 7, random_int is a PHP core function
-     * For PHP 5.x, depends on https://github.com/paragonie/random_compat
-     *
      * @param int $length How many characters do we want?
      */
     public static function generate_hash(int $length = 64): string
