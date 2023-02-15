@@ -26,7 +26,7 @@ class UUIDExtension extends DataExtension
         if (!$owner->UUID) {
             $owner->UUID = $this->getHashID();
         }
-        if (!$owner->PublicUUID) {
+        if (!$owner->PublicUUID || $owner->PublicUUID === 'ERROR') {
             $owner->PublicUUID = $this->calculatePublicUUID();
         }
     }
@@ -40,7 +40,7 @@ class UUIDExtension extends DataExtension
     {
         $owner = $this->getOwner();
         if (!$owner->UUID) {
-            return 'ERROR';
+            return '';
         }
         $from = strpos($owner->UUID, '_') - 6;
 
