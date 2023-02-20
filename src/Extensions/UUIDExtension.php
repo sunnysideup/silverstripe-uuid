@@ -77,7 +77,7 @@ class UUIDExtension extends DataExtension
                 return;
             }
         }
-        $tab = 'Root.Main';
+        $tab = 'Root.UUID';
         if ($owner->hasMethod('UUIDTabInCMS')) {
             $tab = $owner->UUIDTabInCMS();
         }
@@ -85,7 +85,6 @@ class UUIDExtension extends DataExtension
         $fields->addFieldsToTab(
             $tab,
             [
-                ReadonlyField::create('MyUUID', 'Private UUID', $owner->UUID),
                 ReadonlyField::create('MyPublicUUID', 'Public UUID', $owner->PublicUUID),
             ]
         );
