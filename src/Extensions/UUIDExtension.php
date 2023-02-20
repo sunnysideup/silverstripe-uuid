@@ -85,6 +85,7 @@ class UUIDExtension extends DataExtension
         $fields->addFieldsToTab(
             $tab,
             [
+                // ReadonlyField::create('MyUUID', 'Private UUID', $owner->UUID),
                 ReadonlyField::create('MyPublicUUID', 'Public UUID', $owner->PublicUUID),
             ]
         );
