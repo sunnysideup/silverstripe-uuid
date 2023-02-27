@@ -31,8 +31,20 @@ class UUIDExtension extends DataExtension
         }
     }
 
+    private $UUIDNeverAgainRaceCondition = false;
+
+    public function onAfterWrite()
+    {
+        $owner = $this->getOwner();
+        if(! $owner->UUID && ! $this->UUIDNeverAgainRaceCondition === false) {
+            $this->UUIDNeverAgainRaceCondition = true;
+            $owner->write();
+        }
+    }
+
     public static function create_hash_id(string $class, int $id): string
     {
+        //todo - is this guessable? and does this matter? Is this a security feature? 
         return md5(sprintf('%s:%s', $class, $id));
     }
 
