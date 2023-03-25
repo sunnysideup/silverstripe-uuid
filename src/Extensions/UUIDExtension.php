@@ -2,11 +2,11 @@
 
 namespace Sunnysideup\UUDI\Extensions;
 
-use Sunnysideup\UUDI\Api\HashCreator;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\ReadonlyField;
 use SilverStripe\ORM\DataExtension;
+use Sunnysideup\UUDI\Api\HashCreator;
 
 class UUIDExtension extends DataExtension
 {
@@ -20,23 +20,23 @@ class UUIDExtension extends DataExtension
         'PublicUUID' => true,
     ];
 
+    private $UUIDNeverAgainRaceCondition = false;
+
     public function onBeforeWrite()
     {
         $owner = $this->getOwner();
-        if (!$owner->UUID) {
+        if (! $owner->UUID) {
             $owner->UUID = $this->getHashID();
         }
-        if (!$owner->PublicUUID || $owner->PublicUUID === 'ERROR') {
+        if (! $owner->PublicUUID || 'ERROR' === $owner->PublicUUID) {
             $owner->PublicUUID = $this->calculatePublicUUID();
         }
     }
 
-    private $UUIDNeverAgainRaceCondition = false;
-
     public function onAfterWrite()
     {
         $owner = $this->getOwner();
-        if(! $owner->UUID && ! $this->UUIDNeverAgainRaceCondition === false) {
+        if (! $owner->UUID && false === ! $this->UUIDNeverAgainRaceCondition) {
             $this->UUIDNeverAgainRaceCondition = true;
             $owner->write();
         }
@@ -44,14 +44,14 @@ class UUIDExtension extends DataExtension
 
     public static function create_hash_id(string $class, int $id): string
     {
-        //todo - is this guessable? and does this matter? Is this a security feature? 
+        //todo - is this guessable? and does this matter? Is this a security feature?
         return md5(sprintf('%s:%s', $class, $id));
     }
 
     public function calculatePublicUUID(): string
     {
         $owner = $this->getOwner();
-        if (!$owner->UUID) {
+        if (! $owner->UUID) {
             return '';
         }
         $from = strpos($owner->UUID, '_') - 6;
@@ -62,7 +62,7 @@ class UUIDExtension extends DataExtension
     public function updateCMSFields(FieldList $fields)
     {
         $owner = $this->owner;
-        if (!($owner instanceof SiteTree)) {
+        if (! ($owner instanceof SiteTree)) {
             $this->updateCMSFieldsForHashId($fields);
         }
     }
@@ -85,7 +85,7 @@ class UUIDExtension extends DataExtension
             ]
         );
         if ($owner->hasMethod('ShowUUIDInCMS')) {
-            if (!$owner->ShowUUIDInCMS()) {
+            if (! $owner->ShowUUIDInCMS()) {
                 return;
             }
         }
