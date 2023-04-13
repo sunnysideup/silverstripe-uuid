@@ -8,6 +8,13 @@ use SilverStripe\Forms\ReadonlyField;
 use SilverStripe\ORM\DataExtension;
 use Sunnysideup\UUDI\Api\HashCreator;
 
+/**
+ * Class \Sunnysideup\UUDI\Extensions\UUIDExtension
+ *
+ * @property Site|SiteAlias|SiteClient|SiteHost|SiteHourlyRate|SiteLink|SiteMember|SiteTimeRecord|UUIDExtension $owner
+ * @property string $UUID
+ * @property string $PublicUUID
+ */
 class UUIDExtension extends DataExtension
 {
     private static $db = [
