@@ -6,6 +6,7 @@ use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\ReadonlyField;
 use SilverStripe\ORM\DataExtension;
+use SilverStripe\ORM\DataObject;
 use Sunnysideup\UUDI\Api\HashCreator;
 
 /**
@@ -84,6 +85,7 @@ class UUIDExtension extends DataExtension
 
     public function updateCMSFieldsForHashId(FieldList $fields)
     {
+        /** @var DataObject $owner */
         $owner = $this->owner;
         $fields->removeByName(
             [
@@ -92,27 +94,24 @@ class UUIDExtension extends DataExtension
             ]
         );
         if ($owner->hasMethod('ShowUUIDInCMS')) {
-            if (! $owner->ShowUUIDInCMS()) {
-                return;
+            $tab = 'Root.UUID';
+            if ($owner->hasMethod('UUIDTabInCMS')) {
+                $tab = $owner->UUIDTabInCMS();
             }
-        }
-        $tab = 'Root.UUID';
-        if ($owner->hasMethod('UUIDTabInCMS')) {
-            $tab = $owner->UUIDTabInCMS();
-        }
 
-        $fields->addFieldsToTab(
-            $tab,
-            [
-                // ReadonlyField::create('MyUUID', 'Private UUID', $owner->UUID),
-                ReadonlyField::create('MyPublicUUID', 'Public UUID', $owner->PublicUUID),
-            ]
-        );
+            $fields->addFieldsToTab(
+                $tab,
+                [
+                    // ReadonlyField::create('MyUUID', 'Private UUID', $owner->UUID),
+                    ReadonlyField::create('MyPublicUUID', 'Public UUID', $owner->PublicUUID),
+                ]
+            );
+        }
     }
 
     /**
-     * Gets a truly unique identifier to the classname and ID.
-     */
+         * Gets a truly unique identifier to the classname and ID.
+         */
     protected function getHashID(): ?string
     {
         $owner = $this->getOwner();
