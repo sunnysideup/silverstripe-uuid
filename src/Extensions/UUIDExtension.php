@@ -12,7 +12,7 @@ use Sunnysideup\UUDI\Api\HashCreator;
 /**
  * Class \Sunnysideup\UUDI\Extensions\UUIDExtension
  *
- * @property Site|SiteAlias|SiteClient|SiteHost|SiteHourlyRate|SiteLink|SiteMember|SiteRelease|SiteTimeRecord|UUIDExtension $owner
+ * @property DataObject $owner
  * @property string $UUID
  * @property string $PublicUUID
  */

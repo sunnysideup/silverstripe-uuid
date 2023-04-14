@@ -27,5 +27,5 @@ Now your dataobject have two extra fields: `UUID` and `PublicUUID`.
 # customisation
 
 You can use the following methods in your dataobject wit the `UUIDExtension` to customise the CMS:
- - `ShowUUIDInCMS` - returns a boolean
+ - `ShowUUIDInCMS` - returns a boolean - show the fields in the CMS
  - `UUIDTabInCMS` - returns a string - e.g. 'Root.Security'
