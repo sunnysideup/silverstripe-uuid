@@ -10,11 +10,11 @@ use SilverStripe\ORM\DataObject;
 use Sunnysideup\UUDI\Api\HashCreator;
 
 /**
- * Class \Sunnysideup\UUDI\Extensions\UUIDExtension
+ * Class \Sunnysideup\UUDI\Extensions\UUIDExtension.
  *
  * @property Site|SiteAlias|SiteClient|SiteHost|SiteHourlyRate|SiteLink|SiteMember|SiteRelease|SiteTimeRecord|UUIDExtension $owner
- * @property string $UUID
- * @property string $PublicUUID
+ * @property string                                                                                                         $UUID
+ * @property string                                                                                                         $PublicUUID
  */
 class UUIDExtension extends DataExtension
 {
@@ -110,8 +110,8 @@ class UUIDExtension extends DataExtension
     }
 
     /**
-         * Gets a truly unique identifier to the classname and ID.
-         */
+     * Gets a truly unique identifier to the classname and ID.
+     */
     protected function getHashID(): ?string
     {
         $owner = $this->getOwner();
