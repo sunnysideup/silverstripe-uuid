@@ -13,8 +13,8 @@ use Sunnysideup\UUDI\Api\HashCreator;
  * Class \Sunnysideup\UUDI\Extensions\UUIDExtension.
  *
  * @property Site|SiteAlias|SiteClient|SiteHost|SiteHourlyRate|SiteLink|SiteMember|SiteRelease|SiteTimeRecord|UUIDExtension $owner
- * @property string                                                                                                         $UUID
- * @property string                                                                                                         $PublicUUID
+ * @property string $UUID
+ * @property string $PublicUUID
  */
 class UUIDExtension extends DataExtension
 {
