@@ -27,4 +27,11 @@ class HashCreator
     {
         return bin2hex(random_bytes($length));
     }
+
+    public static function create_hash_id(string $class, int $id): string
+    {
+        //todo - is this guessable? and does this matter? Is this a security feature?
+        return md5(sprintf('%s:%s', $class, $id));
+    }
+
 }

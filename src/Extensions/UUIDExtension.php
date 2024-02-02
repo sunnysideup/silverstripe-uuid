@@ -3,6 +3,7 @@
 namespace Sunnysideup\UUDI\Extensions;
 
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\ReadonlyField;
 use SilverStripe\ORM\DataExtension;
@@ -18,12 +19,14 @@ use Sunnysideup\UUDI\Api\HashCreator;
 class UUIDExtension extends DataExtension
 {
     private static $db = [
+        'RequiresUUID' => 'Boolean(0)', //32 + 1 + 32
         'UUID' => 'Varchar(65)', //32 + 1 + 32
         'PublicUUID' => 'Varchar(12)', //32 + 1 + 32
     ];
 
     private static $indexes = [
-        'UUID' => true,
+        'RequiresUUID' => true,
+        'UUID' => false,
         'PublicUUID' => true,
     ];
 
@@ -32,8 +35,12 @@ class UUIDExtension extends DataExtension
     public function onBeforeWrite()
     {
         $owner = $this->getOwner();
-        if (! $owner->UUID) {
-            $owner->UUID = $this->getHashID();
+        if ($owner->RequiresUUID) {
+            if(!$owner->UUID) {
+                $owner->UUID = $this->getHashID();
+            }
+        } else {
+            $owner->UUID = '';
         }
         if (! $owner->PublicUUID || 'ERROR' === $owner->PublicUUID) {
             $owner->PublicUUID = $this->calculatePublicUUID();
@@ -49,21 +56,9 @@ class UUIDExtension extends DataExtension
         }
     }
 
-    public static function create_hash_id(string $class, int $id): string
-    {
-        //todo - is this guessable? and does this matter? Is this a security feature?
-        return md5(sprintf('%s:%s', $class, $id));
-    }
-
     public function calculatePublicUUID(): string
     {
-        $owner = $this->getOwner();
-        if (! $owner->UUID) {
-            return '';
-        }
-        $from = strpos($owner->UUID, '_') - 6;
-
-        return str_replace('_', '', substr($owner->UUID, $from, 13));
+        return HashCreator::generate_hash(12);
     }
 
     public function updateCMSFields(FieldList $fields)
@@ -88,6 +83,7 @@ class UUIDExtension extends DataExtension
         $owner = $this->owner;
         $fields->removeByName(
             [
+                'RequiresUUID',
                 'UUID',
                 'PublicUUID',
             ]
@@ -102,6 +98,7 @@ class UUIDExtension extends DataExtension
                 $tab,
                 [
                     // ReadonlyField::create('MyUUID', 'Private UUID', $owner->UUID),
+                    CheckboxField::create('RequiresUUID', 'Has UUID', $owner->PublicUUID)->performDisabledTransformation,
                     ReadonlyField::create('MyPublicUUID', 'Public UUID', $owner->PublicUUID),
                 ]
             );
@@ -115,7 +112,7 @@ class UUIDExtension extends DataExtension
     {
         $owner = $this->getOwner();
         if ($owner->ID) {
-            return static::create_hash_id($owner->ClassName, $owner->ID) . '_' . HashCreator::generate_hash(32);
+            return HashCreator::create_hash_id($owner->ClassName, $owner->ID) . '_' . HashCreator::generate_hash(32);
         }
 
         return '';
