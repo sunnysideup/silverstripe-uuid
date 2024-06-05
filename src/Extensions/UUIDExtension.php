@@ -3,6 +3,7 @@
 namespace Sunnysideup\UUDI\Extensions;
 
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Core\Config\Config;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\ReadonlyField;
@@ -35,7 +36,7 @@ class UUIDExtension extends DataExtension
     public function onBeforeWrite()
     {
         $owner = $this->getOwner();
-        if ($owner->RequiresUUID) {
+        if ($owner->RequiresUUID || Config::inst()->get(HashCreator::class, 'always_require_uuid')) {
             if(!$owner->UUID) {
                 $owner->UUID = $this->getHashID();
             }

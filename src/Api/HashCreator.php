@@ -2,8 +2,16 @@
 
 namespace Sunnysideup\UUDI\Api;
 
+use SilverStripe\Core\Config\Configurable;
+use SilverStripe\Core\Injector\Injectable;
+
 class HashCreator
 {
+    use Configurable;
+    use Injectable;
+
+    private static $always_require_uuid = false;
+
     private const CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     /**
