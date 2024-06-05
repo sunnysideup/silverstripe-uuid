@@ -40,6 +40,7 @@ class UUIDExtension extends DataExtension
                 $owner->UUID = $this->getHashID();
             }
         } else {
+            $this->UUIDNeverAgainRaceCondition = true;
             $owner->UUID = '';
         }
         if (! $owner->PublicUUID || 'ERROR' === $owner->PublicUUID) {
@@ -50,7 +51,7 @@ class UUIDExtension extends DataExtension
     public function onAfterWrite()
     {
         $owner = $this->getOwner();
-        if (! $owner->UUID && false === ! $this->UUIDNeverAgainRaceCondition) {
+        if (! $owner->UUID && false === $this->UUIDNeverAgainRaceCondition) {
             $this->UUIDNeverAgainRaceCondition = true;
             $owner->write();
         }
