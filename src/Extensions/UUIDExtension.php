@@ -36,7 +36,7 @@ class UUIDExtension extends DataExtension
     public function onBeforeWrite()
     {
         $owner = $this->getOwner();
-        if ($owner->RequiresUUID || Config::inst()->get(HashCreator::class, 'always_require_uuid')) {
+        if ($this->requiresUUID()) {
             if(!$owner->UUID) {
                 $owner->UUID = $this->getHashID();
             }
@@ -118,5 +118,12 @@ class UUIDExtension extends DataExtension
         }
 
         return '';
+    }
+
+    protected function requiresUUID(): bool
+    {
+        $owner = $this->getOwner();
+        return $owner->RequiresUUID || Config::inst()->get(HashCreator::class, 'always_require_uuid');
+
     }
 }
