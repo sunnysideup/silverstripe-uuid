@@ -20,9 +20,9 @@ use Sunnysideup\UUDI\Api\HashCreator;
 class UUIDExtension extends DataExtension
 {
     private static $db = [
-        'RequiresUUID' => 'Boolean(0)', //32 + 1 + 32
+        'RequiresUUID' => 'Boolean(0)',
         'UUID' => 'Varchar(65)', //32 + 1 + 32
-        'PublicUUID' => 'Varchar(12)', //32 + 1 + 32
+        'PublicUUID' => 'Varchar(12)',
     ];
 
     private static $indexes = [
