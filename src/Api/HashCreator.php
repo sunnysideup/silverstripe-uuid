@@ -41,5 +41,4 @@ class HashCreator
         //todo - is this guessable? and does this matter? Is this a security feature?
         return md5(sprintf('%s:%s', $class, $id));
     }
-
 }

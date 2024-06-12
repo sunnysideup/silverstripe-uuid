@@ -37,7 +37,7 @@ class UUIDExtension extends DataExtension
     {
         $owner = $this->getOwner();
         if ($this->requiresUUID()) {
-            if(!$owner->UUID) {
+            if (! $owner->UUID) {
                 $owner->UUID = $this->getHashID();
             }
         } else {
@@ -124,6 +124,5 @@ class UUIDExtension extends DataExtension
     {
         $owner = $this->getOwner();
         return $owner->RequiresUUID || Config::inst()->get(HashCreator::class, 'always_require_uuid');
-
     }
 }
