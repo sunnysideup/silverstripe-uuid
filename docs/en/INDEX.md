@@ -11,7 +11,7 @@ By default, Mysql is NOT case casensitive, so you need to make sure that you use
 This is how you do that:
 
 ```php
-$match = MyObject::get()->filter(['UUID:ExactMatchFilter:case' => 'sensitiveCode'])->first();
+$match = MyObject::get()->filter(['UUID:case' => 'sensitiveCode'])->first();
 ```
 
 # config.yml
