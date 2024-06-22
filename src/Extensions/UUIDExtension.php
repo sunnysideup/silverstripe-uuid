@@ -52,15 +52,15 @@ class UUIDExtension extends DataExtension
     public function onAfterWrite()
     {
         $owner = $this->getOwner();
-        if (! $owner->UUID && false === $this->UUIDNeverAgainRaceCondition) {
+        if (! $owner->PublicUUID && false === $this->UUIDNeverAgainRaceCondition) {
             $this->UUIDNeverAgainRaceCondition = true;
             $owner->write();
         }
     }
 
-    public function calculatePublicUUID(): string
+    public function calculatePublicUUID(?int $length = 12): string
     {
-        return HashCreator::generate_hash(12);
+        return HashCreator::generate_hash($length);
     }
 
     public function updateCMSFields(FieldList $fields)
