@@ -100,8 +100,8 @@ class UUIDExtension extends DataExtension
                 $tab,
                 [
                     // ReadonlyField::create('MyUUID', 'Private UUID', $owner->UUID),
-                    CheckboxField::create('RequiresUUID', 'Has UUID', $owner->PublicUUID)->performDisabledTransformation,
-                    ReadonlyField::create('MyPublicUUID', 'Public UUID', $owner->PublicUUID),
+                    CheckboxField::create('RequiresUUID', _t('UUIDExtension.RequiresUUID', 'Hash Public UUID'), $owner->PublicUUID)->performDisabledTransformation,
+                    ReadonlyField::create('MyPublicUUID', _t('UUIDExtension.PublicUUID', 'Public UUID'), $owner->PublicUUID),
                 ]
             );
         }
@@ -112,6 +112,7 @@ class UUIDExtension extends DataExtension
      */
     protected function getHashID(): ?string
     {
+
         $owner = $this->getOwner();
         if ($owner->ID) {
             return HashCreator::create_hash_id($owner->ClassName, $owner->ID) . '_' . HashCreator::generate_hash(32);
