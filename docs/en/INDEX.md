@@ -6,7 +6,7 @@ You can add the Extension to any dataobject and this will give it a globally uni
 
 Because we are using upper and lower case letters, the UUID is case sensitive.
 
-By default, Mysql is NOT case casensitive, so you need to make sure that you use a case sensitive collation for the UUID field.
+By default, Mysql is NOT case casensitive, so you need to make sure that you use a case sensitive filtering for the UUID field.
 
 This is how you do that:
 
