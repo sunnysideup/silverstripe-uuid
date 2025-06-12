@@ -124,6 +124,8 @@ class UUIDExtension extends DataExtension
     protected function requiresUUID(): bool
     {
         $owner = $this->getOwner();
-        return $owner->RequiresUUID || Config::inst()->get(HashCreator::class, 'always_require_uuid');
+        return $owner->RequiresUUID ||
+            Config::inst()->get(HashCreator::class, 'always_require_uuid') ||
+            Config::inst()->get($owner->ClassName, 'always_require_uuid');
     }
 }
