@@ -2,7 +2,7 @@
 
 You can add the Extension to any dataobject and this will give it a globally unique hash (UUID).
 
-# Important
+## Important
 
 Because we are using upper and lower case letters, the UUID is case sensitive.
 
@@ -14,12 +14,13 @@ This is how you do that:
 $match = MyObject::get()->filter(['UUID:case' => 'sensitiveCode'])->first();
 ```
 
-# config.yml
+## config.yml
 
 ```yml
 MyDataObject:
     extensions:
         - Sunnysideup\UUID\Extensions\UUIDExtension
+    always_require_uuid: true
 
 # or ...
 
@@ -33,9 +34,9 @@ Now your dataobject has two extra fields: `UUID` and `PublicUUID`.
 `UUID` is 65 characters long and is extremely likely to be unique.
 `PublicUUID` is only 12 characters long (so it might not be unique!)
 
-# customisation
+## customisation
 
 You can use the following methods in your dataobject wit the `UUIDExtension` to customise the CMS:
 
--   `ShowUUIDInCMS` - returns a boolean - show the fields in the CMS
--   `UUIDTabInCMS` - returns a string - e.g. 'Root.Security'
+- `ShowUUIDInCMS` - returns a boolean - show the fields in the CMS
+- `UUIDTabInCMS` - returns a string - e.g. 'Root.Security'
