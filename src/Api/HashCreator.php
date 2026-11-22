@@ -1,6 +1,6 @@
 <?php
 
-namespace Sunnysideup\UUDI\Api;
+namespace Sunnysideup\UUID\Api;
 
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
