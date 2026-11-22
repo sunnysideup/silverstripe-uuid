@@ -12,7 +12,7 @@ class HashCreator
 
     private static $always_require_uuid = false;
 
-    private const CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    private const string CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     /**
      * Generate a random string, using a cryptographically secure
