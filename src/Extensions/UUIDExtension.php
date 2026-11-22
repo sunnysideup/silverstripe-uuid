@@ -1,23 +1,23 @@
 <?php
 
-namespace Sunnysideup\UUDI\Extensions;
+namespace Sunnysideup\UUID\Extensions;
 
+use SilverStripe\Core\Extension;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\ReadonlyField;
-use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\DataObject;
-use Sunnysideup\UUDI\Api\HashCreator;
+use Sunnysideup\UUID\Api\HashCreator;
 
 /**
- * Class \Sunnysideup\UUDI\Extensions\UUIDExtension.
+ * Class \Sunnysideup\UUID\Extensions\UUIDExtension.
  *
  * @property string $UUID
  * @property string $PublicUUID
  */
-class UUIDExtension extends DataExtension
+class UUIDExtension extends Extension
 {
     private static $db = [
         'RequiresUUID' => 'Boolean(0)',
@@ -44,6 +44,7 @@ class UUIDExtension extends DataExtension
             $this->UUIDNeverAgainRaceCondition = true;
             $owner->UUID = '';
         }
+
         if (! $owner->PublicUUID || 'ERROR' === $owner->PublicUUID) {
             $owner->PublicUUID = $this->calculatePublicUUID();
         }
@@ -65,7 +66,7 @@ class UUIDExtension extends DataExtension
 
     public function updateCMSFields(FieldList $fields)
     {
-        $owner = $this->owner;
+        $owner = $this->getOwner();
         if (! ($owner instanceof SiteTree)) {
             $this->updateCMSFieldsForHashId($fields);
         }
@@ -73,7 +74,7 @@ class UUIDExtension extends DataExtension
 
     public function updateSettingsFields(FieldList $fields)
     {
-        $owner = $this->owner;
+        $owner = $this->getOwner();
         if ($owner instanceof SiteTree) {
             $this->updateCMSFieldsForHashId($fields);
         }
@@ -82,7 +83,7 @@ class UUIDExtension extends DataExtension
     public function updateCMSFieldsForHashId(FieldList $fields)
     {
         /** @var DataObject $owner */
-        $owner = $this->owner;
+        $owner = $this->getOwner();
         $fields->removeByName(
             [
                 'RequiresUUID',
@@ -100,7 +101,7 @@ class UUIDExtension extends DataExtension
                 $tab,
                 [
                     // ReadonlyField::create('MyUUID', 'Private UUID', $owner->UUID),
-                    CheckboxField::create('RequiresUUID', _t('UUIDExtension.RequiresUUID', 'Hash Public UUID'), $owner->PublicUUID)->performDisabledTransformation,
+                    CheckboxField::create('RequiresUUID', _t('UUIDExtension.RequiresUUID', 'Hash Public UUID'), $owner->PublicUUID)->performDisabledTransformation(),
                     ReadonlyField::create('MyPublicUUID', _t('UUIDExtension.PublicUUID', 'Public UUID'), $owner->PublicUUID),
                 ]
             );

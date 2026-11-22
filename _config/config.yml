@@ -3,5 +3,5 @@ Name: uuid
 After:
   - '#coreconfig'
 ---
-# Sunnysideup\UUDI\Api\HashCreator:
+# Sunnysideup\UUID\Api\HashCreator:
 #   always_require_uuid: true

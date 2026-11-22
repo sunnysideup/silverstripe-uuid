@@ -1,6 +1,6 @@
 <?php
 
-namespace Sunnysideup\UUDI\Api;
+namespace Sunnysideup\UUID\Api;
 
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
@@ -12,7 +12,7 @@ class HashCreator
 
     private static $always_require_uuid = false;
 
-    private const CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    private const string CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     /**
      * Generate a random string, using a cryptographically secure
